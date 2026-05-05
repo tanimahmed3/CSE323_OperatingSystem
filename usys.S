@@ -29,3 +29,7 @@ SYSCALL(getpid)
 SYSCALL(sbrk)
 SYSCALL(sleep)
 SYSCALL(uptime)
+
+// your added syscalls
+SYSCALL(ps)
+SYSCALL(setpriority)

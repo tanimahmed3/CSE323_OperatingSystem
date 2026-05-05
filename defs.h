@@ -84,8 +84,8 @@ void            microdelay(int);
 // log.c
 void            initlog(int dev);
 void            log_write(struct buf*);
-void            begin_op();
-void            end_op();
+void            begin_op(void);
+void            end_op(void);
 
 // mp.c
 extern int      ismp;
@@ -109,7 +109,7 @@ int             fork(void);
 int             growproc(int);
 int             kill(int);
 struct cpu*     mycpu(void);
-struct proc*    myproc();
+struct proc*    myproc(void);
 void            pinit(void);
 void            procdump(void);
 void            scheduler(void) __attribute__((noreturn));
@@ -120,6 +120,10 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+
+// project functions
+void            ps(void);
+int             setpriority(int, int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

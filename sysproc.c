@@ -17,7 +17,7 @@ int
 sys_exit(void)
 {
   exit();
-  return 0;  // not reached
+  return 0;
 }
 
 int
@@ -50,9 +50,12 @@ sys_sbrk(void)
 
   if(argint(0, &n) < 0)
     return -1;
+
   addr = myproc()->sz;
+
   if(growproc(n) < 0)
     return -1;
+
   return addr;
 }
 
@@ -64,8 +67,10 @@ sys_sleep(void)
 
   if(argint(0, &n) < 0)
     return -1;
+
   acquire(&tickslock);
   ticks0 = ticks;
+
   while(ticks - ticks0 < n){
     if(myproc()->killed){
       release(&tickslock);
@@ -73,12 +78,11 @@ sys_sleep(void)
     }
     sleep(&ticks, &tickslock);
   }
+
   release(&tickslock);
   return 0;
 }
 
-// return how many clock tick interrupts have occurred
-// since start.
 int
 sys_uptime(void)
 {
@@ -87,5 +91,28 @@ sys_uptime(void)
   acquire(&tickslock);
   xticks = ticks;
   release(&tickslock);
+
   return xticks;
+}
+
+int
+sys_ps(void)
+{
+  ps();
+  return 0;
+}
+
+int
+sys_setpriority(void)
+{
+  int pid;
+  int priority;
+
+  if(argint(0, &pid) < 0)
+    return -1;
+
+  if(argint(1, &priority) < 0)
+    return -1;
+
+  return setpriority(pid, priority);
 }
